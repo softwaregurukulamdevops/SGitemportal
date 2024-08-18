@@ -23,6 +23,10 @@ resource "azurerm_app_service" "container_service" {
   location            = azurerm_resource_group.example.location
   resource_group_name = azurerm_resource_group.example.name
   app_service_plan_id = azurerm_service_plan.linux_plan.id
+
+  site_config {
+    linux_fx_version = "" # No Docker image specified
+  }
 }
 
 # Output the URL
