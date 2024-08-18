@@ -13,13 +13,12 @@ resource "azurerm_service_plan" "linux_plan" {
   name                = "rg-itemportal-linux-app-service-plan"
   location            = azurerm_resource_group.example.location
   resource_group_name = azurerm_resource_group.example.name
-  kind                = "Linux"
-  reserved            = true  # Required for Linux-based App Service Plan
+  os_type              = "Linux"  # Required for Linux App Service Plan
 
-  sku {
-    tier = "Basic"
-    size = "B1"  # Adjust size according to your needs
-  }
+  sku_name             = "B1"  # Adjust size according to your needs
+  tier                 = "Basic"  # Same as the `tier` in the old `azurerm_app_service_plan`
+
+  reserved             = true  # Required for Linux-based App Service Plan
 }
 
 # Define the Container-based App Service
