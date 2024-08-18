@@ -15,7 +15,6 @@ resource "azurerm_service_plan" "linux_plan" {
   resource_group_name = azurerm_resource_group.example.name
   os_type             = "Linux"
   sku_name            = "B1"
-  reserved            = true
 }
 
 # Define the Container-based App Service
