@@ -3,7 +3,7 @@ provider "azurerm" {
 }
 
 # Define the Resource Group
-resource "azurerm_resource_group" "examplesrss" {
+resource "azurerm_resource_group" "example" {
   name     = "rg-itemportal-resources"
   location = "East US"  # Replace with your desired location
 }
@@ -11,8 +11,8 @@ resource "azurerm_resource_group" "examplesrss" {
 # Define the Standard App Service Plan
 resource "azurerm_app_service_plan" "standard_plan" {
   name                = "rg-itemportal-app-service-plan"
-  location            = azurerm_resource_group.examplesrss.location
-  resource_group_name = azurerm_resource_group.examplesrss.name
+  location            = azurerm_resource_group.example.location
+  resource_group_name = azurerm_resource_group.example.name
   kind                = "App"
   
   sku {
@@ -24,8 +24,8 @@ resource "azurerm_app_service_plan" "standard_plan" {
 # Define the Linux App Service Plan for Containers
 resource "azurerm_service_plan" "linux_plan" {
   name                = "rg-itemportal-linux-app-service-plan"
-  location            = azurerm_resource_group.examplesrss.location
-  resource_group_name = azurerm_resource_group.examplesrss.name
+  location            = azurerm_resource_group.example.location
+  resource_group_name = azurerm_resource_group.example.name
   kind                = "Linux"
   reserved            = true  # Required for Linux-based App Service Plan
   
@@ -38,26 +38,19 @@ resource "azurerm_service_plan" "linux_plan" {
 # Define the Standard App Service
 resource "azurerm_app_service" "standard_service" {
   name                = "rg-itemportal-standard-app-service"
-  location            = azurerm_resource_group.examplesrss.location
-  resource_group_name = azurerm_resource_group.examplesrss.name
+  location            = azurerm_resource_group.example.location
+  resource_group_name = azurerm_resource_group.example.name
   app_service_plan_id = azurerm_app_service_plan.standard_plan.id
 
-  app_settings = {
-    "SOME_SETTING" = "value"
-  }
 }
 
 # Define the Container-based App Service
 resource "azurerm_app_service" "container_service" {
   name                = "rg-itemportal-container-app"
-  location            = azurerm_resource_group.examplesrss.location
-  resource_group_name = azurerm_resource_group.examplesrss.name
+  location            = azurerm_resource_group.example.location
+  resource_group_name = azurerm_resource_group.example.name
   app_service_plan_id = azurerm_service_plan.linux_plan.id
   
-  site_config {
-    linux_fx_version = "DOCKER|<your-container-registry>/<your-image>:<tag>"  # Replace with your Docker image
-  }
-
   app_settings = {
     "WEBSITES_ENABLE_APP_SERVICE_STORAGE" = "false"  # Optional: Disable persistent storage if not needed
     "SOME_SETTING"                        = "value"
