@@ -9,13 +9,13 @@ resource "azurerm_resource_group" "example" {
 }
 
 # Define the Linux App Service Plan for Containers
-resource "azurerm_app_service_plan" "linux_plan" {
+resource "azurerm_service_plan" "linux_plan" {
   name                = "rg-itemportal-linux-app-service-plan"
   location            = azurerm_resource_group.example.location
   resource_group_name = azurerm_resource_group.example.name
   kind                = "Linux"
   reserved            = true  # Required for Linux-based App Service Plan
-  
+
   sku {
     tier = "Basic"
     size = "B1"  # Adjust size according to your needs
@@ -27,7 +27,7 @@ resource "azurerm_app_service" "container_service" {
   name                = "rg-itemportal-container-app"
   location            = azurerm_resource_group.example.location
   resource_group_name = azurerm_resource_group.example.name
-  app_service_plan_id = azurerm_app_service_plan.linux_plan.id
+  app_service_plan_id = azurerm_service_plan.linux_plan.id
 
   app_settings = {
     "WEBSITES_ENABLE_APP_SERVICE_STORAGE" = "false"  # Optional: Disable persistent storage if not needed
