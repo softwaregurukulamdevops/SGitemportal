@@ -4,7 +4,7 @@ provider "azurerm" {
 
 # Define the Resource Group
 resource "azurerm_resource_group" "example" {
-  name     = "rg-itemportal-resources"
+  name     = "rg-itemportal-container-resources"
   location = "East US"  # Replace with your desired location
 }
 
